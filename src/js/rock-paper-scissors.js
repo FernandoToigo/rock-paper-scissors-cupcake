@@ -1,18 +1,28 @@
+let rules = [
+{
+    value: 'rock',
+    beats: [ 'scissors' ],
+    isBeatenBy: [ 'paper' ]
+},
+{
+    value: 'scissors',
+    beats: [ 'paper' ],
+    isBeatenBy: [ 'rock' ]
+},
+{
+    value: 'paper',
+    beats: [ 'rock' ],
+    isBeatenBy: [ 'scissors' ]
+}];
+
 export function playRockPaperScissors(first, second) {
-    if ((first === 'rock' || second === 'rock') &&
-        (first === 'scissors' || second === 'scissors')) {
-        return 'rock';
-    }
+    const rule = rules.find(r => r.value === first);
 
-    if ((first === 'scissors' || second === 'scissors') &&
-        (first === 'paper' || second === 'paper')) {
-        return 'scissors';
-    }
+    if (rule.beats.some(v => v === second))
+        return first;
 
-    if ((first === 'paper' || second === 'paper') &&
-        (first === 'rock' || second === 'rock')) {
-        return 'paper';
-    }
+    if (rule.isBeatenBy.some(v => v === second))
+        return second;
 
     return 'draw';
 }
