@@ -34,6 +34,6 @@ test('ten options chooses enough of each option randomly', t => {
     }
 
     for (let i = 0; i < 10; i++) {
-        t.true(numberOfResults[i] >= 3);
+        t.true(numberOfResults[i] >= 2);
     }
 });
