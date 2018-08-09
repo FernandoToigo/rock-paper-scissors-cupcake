@@ -10,19 +10,34 @@
 
 <body>
 
-    <div style="text-align: center">
-        <div>
-            <select id="playerOption">
-                <option value="rock">Rock</option>
-                <option value="paper">Paper</option>
-                <option value="scissors">Scissors</option>
-            </select>
-            <label style="margin: 0px 10px">vs</label>
-            <label id="aiOption">...</label>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; width: 600px; margin: 0 auto;">
+        <div style="text-align: center;">
+            <div>
+                <label>Choose your option</label>
+                <select id="playerOption">
+                    <option value="rock">Rock</option>
+                    <option value="paper">Paper</option>
+                    <option value="scissors">Scissors</option>
+                </select>
+            </div>
+            <button style="height: 30px; width: 200px; clear: both;" id="playerVsComputer">Player vs Computer</button>
+            <div>
+                <label id="playerVsComputerMatch"></label>
+            </div>
+            <div>
+                <label id="playerVsComputerResult"></label>
+            </div>
         </div>
-        <button style="height: 30px; width: 150px; clear: both;" id="play">Play against AI</button>
-        <div>
-            <label id="result"></label>
+        <div style="text-align: center;">
+            <div>
+                <button style="height: 30px; width: 200px; clear: both;" id="computerVsComputer">Computer vs Computer</button>
+            </div>
+            <div>
+                <label id="computerVsComputerMatch"></label>
+            </div>
+            <div>
+                <label id="computerVsComputerResult"></label>
+            </div>
         </div>
     </div>
 
