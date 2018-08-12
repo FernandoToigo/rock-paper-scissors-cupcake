@@ -1,7 +1,8 @@
 {
 	"scripts": {
 		"test": "nyc ava src/tests/**/*.js --verbose",
-		"start": "webpack-dev-server --open"
+		"start": "webpack-dev-server --open",
+		"buildprod": "webpack -p"
 	},
 	"devDependencies": {
 		"@ava/babel-preset-stage-4": "^1.1.0",

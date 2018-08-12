@@ -1,5 +1,5 @@
 import test from 'ava';
-import { chooseRockPaperScissorsOption } from '../js/rock-paper-scissors-random-ai';
+import { chooseRockPaperScissorsOption } from '../js/random-ai';
 
 test('one option chooses always the same option', t => {
     for (let i = 0; i < 100; i++) {
