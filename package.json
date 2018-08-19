@@ -9,10 +9,12 @@
 		"@ava/babel-preset-stage-4": "^1.1.0",
 		"ava": "1.0.0-beta.6",
 		"babel-register": "^6.26.0",
+		"copy-webpack-plugin": "^4.5.2",
 		"nyc": "^12.0.2",
 		"webpack": "^4.16.5",
 		"webpack-cli": "^3.1.0",
-		"webpack-dev-server": "^3.1.5"
+		"webpack-dev-server": "^3.1.5",
+		"write-file-webpack-plugin": "^4.3.2"
 	},
 	"ava": {
 		"require": [

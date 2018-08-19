@@ -1,4 +1,6 @@
-var path = require('path');
+const WriteFilePlugin = require('write-file-webpack-plugin');
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
     mode: 'development',
@@ -24,5 +26,11 @@ module.exports = {
           }
         ]
     },
-    watch: true
+    watch: true,
+    plugins: [
+      new CopyWebpackPlugin([
+        { from: 'html/**/*', to: './', flatten: true }
+      ]),
+      new WriteFilePlugin()
+    ]
 }
