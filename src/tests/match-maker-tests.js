@@ -1,13 +1,15 @@
 import test from 'ava';
 import { playMatchFactory } from '../js/match-maker';
 
-test('play match with fixed options results in correct match', t => {
-    const game = (a, b) => {
-        return 'something';
-    };
-    const match = playMatchFactory(game);
-    const result = match(() => 'rock', () => 'paper');
-    t.is('rock', result.firstOption);
-    t.is('paper', result.secondOption);
+test('play match returns correct results', t => {
+    const gameConfiguration = {
+        game: (a, b) => 'something',
+        playerOneCallback: () => 'rock',
+        playerTwoCallback: () => 'paper'
+    }
+    const match = playMatchFactory(gameConfiguration);
+    const result = match([]);
+    t.is('rock', result.playerOneOption);
+    t.is('paper', result.playerTwoOption);
     t.is('something', result.result);
 });

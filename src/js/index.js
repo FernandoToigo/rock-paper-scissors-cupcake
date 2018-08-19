@@ -1,6 +1,8 @@
-import { playRockPaperScissors } from './rock-paper-scissors';
-import { chooseOption } from './random-ai';
+import { playRockPaperScissors, rules } from './rock-paper-scissors';
+import { chooseOption as randomAiChooseOption } from './random-ai';
+import { chooseOption as patternAiChooseOption } from './pattern-ai';
 import { playMatchFactory } from './match-maker';
+import { addResult } from './game-history';
 
 window.onload = function () {
     const flashingTextElement = document.getElementById('flashingText');
@@ -14,22 +16,33 @@ window.onload = function () {
     const playRoundButton = document.getElementById('playRoundButton');
 
     const selectedIndexes = {};
-
-    const options = ['rock', 'paper', 'scissors'];
-
-    const computerOptionCallback = () => {
-        return chooseOption(options);
+    let playMatch = undefined;
+    let history = [];
+    const options = Object.keys(rules);
+    const scoreboard = {
+        playerOne: 0,
+        playerTwo: 0
     };
 
-    const humanOneOptionCallback = () => {
+    const computerOptionCallback = () => {
+        return randomAiChooseOption(options);
+    };
+
+    const computerPlusPlayerOneOptionCallback = () => {
+        return patternAiChooseOption(rules, history, 1);
+    };
+
+    const computerPlusPlayerTwoOptionCallback = () => {
+        return patternAiChooseOption(rules, history, 0);
+    };
+
+    const humanPlayerOneOptionCallback = () => {
         return options[selectedIndexes[humanOptionsOne.id]];
     };
 
-    const humanTwoOptionCallback = () => {
+    const humanPlayerTwoOptionCallback = () => {
         return options[selectedIndexes[humanOptionsTwo.id]];
     };
-
-    const playMatch = playMatchFactory(playRockPaperScissors);
 
     document.getElementById('toMatchButton').onclick = function () {
         choosePlayersPage.classList.add('page-previous');
@@ -56,6 +69,15 @@ window.onload = function () {
         setFirstButtonIcon(computerOptionsOne, 'question', null);
         setFirstButtonIcon(computerOptionsTwo, 'question', null);
         matchResultElement.innerHTML = "";
+
+        history = [];
+        const gameConfiguration = {
+            game: playRockPaperScissors,
+            playerOneCallback: getPlayerOneChooseOption(),
+            playerTwoCallback: getPlayerTwoChooseOption()
+        };
+
+        playMatch = playMatchFactory(gameConfiguration);
     };
 
     document.getElementById('toPlayersButton').onclick = function () {
@@ -68,9 +90,6 @@ window.onload = function () {
         hideElement(playRoundButton);
         matchResultElement.innerHTML = "";
 
-        const firstOptionCallback = isPlayerOneHuman() ? humanOneOptionCallback : computerOptionCallback;
-        const secondOptionCallback = isPlayerTwoHuman() ? humanTwoOptionCallback : computerOptionCallback;
-
         doActionToDeselectedButtons([humanOptionsOne, humanOptionsTwo], button => hideElement(button));
         setFirstButtonIcon(computerOptionsOne, 'question', null);
         setFirstButtonIcon(computerOptionsTwo, 'question', null);
@@ -82,21 +101,27 @@ window.onload = function () {
 
             flashingTextElement.classList.remove('match-result-flashing');
 
-            const matchResult = playMatch(firstOptionCallback, secondOptionCallback);
+            const matchResult = playMatch(history);
             let resultMessage = 'Draw!';
-            if (matchResult.result == matchResult.firstOption)
+            if (matchResult.result == matchResult.playerOneOption) {
+                scoreboard.playerOne++;
                 resultMessage = "Player 1 wins!";
-            else if (matchResult.result == matchResult.secondOption)
+            }
+            else if (matchResult.result == matchResult.playerTwoOption) {
+                scoreboard.playerTwo++;
                 resultMessage = "Player 2 wins!";
+            }
 
             matchResultElement.innerHTML = resultMessage;
 
+            addResult(rules, matchResult, history);
+
             if (isPlayerOneComputer()) {
-                setFirstButtonIcon(computerOptionsOne, 'hand-' + matchResult.firstOption, matchResult.firstOption);
+                setFirstButtonIcon(computerOptionsOne, 'hand-' + matchResult.playerOneOption, matchResult.playerOneOption);
             }
 
             if (isPlayerTwoComputer()) {
-                setFirstButtonIcon(computerOptionsTwo, 'hand-' + matchResult.secondOption, matchResult.secondOption);
+                setFirstButtonIcon(computerOptionsTwo, 'hand-' + matchResult.playerTwoOption, matchResult.playerTwoOption);
             }
 
             showElement(playRoundButton);
@@ -120,11 +145,11 @@ window.onload = function () {
     }
 
     function isPlayerOneComputer() {
-        return selectedIndexes['playerTypesOne'] == 1;
+        return selectedIndexes['playerTypesOne'] >= 1;
     }
 
     function isPlayerTwoComputer() {
-        return selectedIndexes['playerTypesTwo'] == 1;
+        return selectedIndexes['playerTypesTwo'] >= 1;
     }
 
     function hideElement(element) {
@@ -133,6 +158,39 @@ window.onload = function () {
 
     function showElement(element) {
         element.classList.remove('element-hidden');
+    }
+
+    function getPlayerOneChooseOption() {
+        if (selectedIndexes['playerTypesOne'] == 0) {
+            return humanPlayerOneOptionCallback;
+        }
+        else if (selectedIndexes['playerTypesOne'] == 1) {
+            return computerOptionCallback;
+        }
+        else {
+            return computerPlusPlayerOneOptionCallback;
+        }
+    }
+
+    function getPlayerTwoChooseOption() {
+        if (selectedIndexes['playerTypesTwo'] == 0) {
+            return humanPlayerTwoOptionCallback;
+        }
+        else if (selectedIndexes['playerTypesTwo'] == 1) {
+            return computerOptionCallback;
+        }
+        else {
+            return computerPlusPlayerTwoOptionCallback;
+        }
+    }
+
+    function getComputerOption(elementId) {
+        if (selectedIndexes[elementId] == 1) {
+            
+        }
+        else if (selectedIndexes[elementId] == 2) {
+            return ;
+        }
     }
 
     function setFirstButtonIcon(container, icon, name) {

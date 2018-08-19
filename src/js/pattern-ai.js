@@ -1,4 +1,6 @@
-export function chooseOption(rules, history) {
+import { getOptionsFromCombinationIndex } from './game-history.js';
+
+export function chooseOption(rules, history, enemyPlayerIndex) {
 
     if (history.length > 1) {
         const historyCut = history.slice(0, -1);
@@ -10,40 +12,14 @@ export function chooseOption(rules, history) {
 
             if (samePatternIndex > -1) {
                 const playedOptions = getOptionsFromCombinationIndex(rules, Number(history[samePatternIndex + searchLength]));
-                return rules[playedOptions[0]].isBeatenBy[0];
+                const enemyPlayedOption = playedOptions[enemyPlayerIndex];
+                return rules[enemyPlayedOption].isBeatenBy[0];
             }
         }
     }
 
     const randomIndex = Math.floor(Math.random() * Object.keys(rules).length);
     return Object.keys(rules)[randomIndex];
-}
-
-export function addResult(rules, result, history, player) {
-    let combinationIndex;
-    if (player === 0)
-        combinationIndex = getCombinationIndex(rules, result.firstOption, result.secondOption);
-    else
-        combinationIndex = getCombinationIndex(rules, result.secondOption, result.firstOption);
-
-    history.push(combinationIndex);
-    return history;
-}
-
-function getCombinationIndex(rules, firstOption, secondOption) {
-    const options = Object.keys(rules);
-    const firstIndex = options.indexOf(firstOption);
-    const secondIndex = options.indexOf(secondOption);
-    return firstIndex * options.length + secondIndex;
-}
-
-function getOptionsFromCombinationIndex(rules, combinationIndex) {
-    const options = Object.keys(rules);
-    const firstIndex = Math.floor(combinationIndex / options.length)
-    const secondIndex = combinationIndex % options.length;
-    const firstOption = options[firstIndex];
-    const secondOption = options[secondIndex];
-    return [firstOption, secondOption];
 }
 
 function findPattern(history, pattern)  {

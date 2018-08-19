@@ -1,12 +1,14 @@
-export const playMatchFactory = (game) => (firstOptionCallback, secondOptionCallback) => {
-    const firstOption = firstOptionCallback();
-    const secondOption = secondOptionCallback();
+export const playMatchFactory = (gameConfiguration) => () => {
+    const playerOneOption = gameConfiguration.playerOneCallback();
+    const playerTwoOption = gameConfiguration.playerTwoCallback();
 
-    const result = game(firstOption, secondOption);
+    const result = gameConfiguration.game(playerOneOption, playerTwoOption);
 
-    return {
-        firstOption: firstOption,
-        secondOption: secondOption,
+    const match = {
+        playerOneOption: playerOneOption,
+        playerTwoOption: playerTwoOption,
         result: result
-    };
+    }
+
+    return match;
 }
