@@ -28,7 +28,7 @@
     padding: 0px 20px;
     width: 100px;
     height: 100%;
-    background: white;
+    background: transparent;
     transform: translateY(0px);
     animation: float 2.0s ease-in-out infinite;
 }
@@ -49,8 +49,6 @@
 .list-item:hover {
     background: #e7f9ff88;
 }
-
-.selected-item {}
 
 .item-inside {
     width: 100%;
@@ -106,12 +104,15 @@
     background: #e7f9ff;
 }
 
-.top-button {
+.margin-top {
     margin-top: 5vh;
 }
 
-.bottom-button {
+.margin-bottom {
     margin-bottom: 5vh;
+}
+
+.bottom-button {
     box-shadow: 0px 0px 2px 0px #8c8c8c;
 }
 
