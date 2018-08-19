@@ -1,9 +1,9 @@
 import test from 'ava';
-import { chooseRockPaperScissorsOption } from '../js/random-ai';
+import { chooseOption } from '../js/random-ai';
 
 test('one option chooses always the same option', t => {
     for (let i = 0; i < 100; i++) {
-        t.is(chooseRockPaperScissorsOption(['paper']), 'paper');
+        t.is(chooseOption(['paper']), 'paper');
     }
 });
 
@@ -13,7 +13,7 @@ test('two options chooses both options randomly', t => {
         ['paper']: 0
     };
     for (let i = 0; i < 100; i++) {
-        const result = chooseRockPaperScissorsOption(['rock', 'paper']);
+        const result = chooseOption(['rock', 'paper']);
         numberOfResults[result]++;
     }
     t.true(numberOfResults['rock'] >= 25);
@@ -29,7 +29,7 @@ test('ten options chooses enough of each option randomly', t => {
     }
 
     for (let i = 0; i < 100; i++) {
-        const result = chooseRockPaperScissorsOption(options);
+        const result = chooseOption(options);
         numberOfResults[result]++;
     }
 

@@ -1,8 +1,9 @@
 import { playRockPaperScissors } from './rock-paper-scissors';
-import { chooseRockPaperScissorsOption } from './random-ai';
+import { chooseOption } from './random-ai';
 import { playMatchFactory } from './match-maker';
 
 window.onload = function () {
+    const flashingTextElement = document.getElementById('flashingText');
     const matchResultElement = document.getElementById('matchResult');
     const choosePlayersPage = document.getElementById('choosePlayersPage');
     const matchPage = document.getElementById('matchPage');
@@ -10,13 +11,14 @@ window.onload = function () {
     const humanOptionsTwo = document.getElementById('humanOptionsTwo');
     const computerOptionsOne = document.getElementById('computerOptionsOne');
     const computerOptionsTwo = document.getElementById('computerOptionsTwo');
+    const playRoundButton = document.getElementById('playRoundButton');
 
     const selectedIndexes = {};
 
     const options = ['rock', 'paper', 'scissors'];
 
     const computerOptionCallback = () => {
-        return chooseRockPaperScissorsOption(options);
+        return chooseOption(options);
     };
 
     const humanOneOptionCallback = () => {
@@ -61,7 +63,11 @@ window.onload = function () {
         matchPage.classList.add('page-next');
     };
 
-    document.getElementById('startButton').onclick = function () {
+    playRoundButton.onclick = function () {
+
+        hideElement(playRoundButton);
+        matchResultElement.innerHTML = "";
+
         const firstOptionCallback = isPlayerOneHuman() ? humanOneOptionCallback : computerOptionCallback;
         const secondOptionCallback = isPlayerTwoHuman() ? humanTwoOptionCallback : computerOptionCallback;
 
@@ -74,12 +80,14 @@ window.onload = function () {
         setTimeout(() => flashMatchResult("Scissors!"), 600);
         setTimeout(() => {
 
+            flashingTextElement.classList.remove('match-result-flashing');
+
             const matchResult = playMatch(firstOptionCallback, secondOptionCallback);
             let resultMessage = 'Draw!';
             if (matchResult.result == matchResult.firstOption)
-                resultMessage = "Player one wins!";
+                resultMessage = "Player 1 wins!";
             else if (matchResult.result == matchResult.secondOption)
-                resultMessage = "Player two wins!";
+                resultMessage = "Player 2 wins!";
 
             matchResultElement.innerHTML = resultMessage;
 
@@ -91,14 +99,15 @@ window.onload = function () {
                 setFirstButtonIcon(computerOptionsTwo, 'hand-' + matchResult.secondOption, matchResult.secondOption);
             }
 
+            showElement(playRoundButton);
             doActionToDeselectedButtons([humanOptionsOne, humanOptionsTwo], button => showElement(button));
         }, 900);
 
         function flashMatchResult(value) {
-            matchResultElement.classList.remove('match-result-flashing');
-            matchResultElement.innerHTML = value;
-            void matchResultElement.offsetWidth; // This line is needed in order for the transition to start again immediatelly
-            matchResultElement.classList.add('match-result-flashing');
+            flashingTextElement.classList.remove('match-result-flashing');
+            flashingTextElement.innerHTML = value;
+            void flashingTextElement.offsetWidth; // This line is needed in order for the transition to start again immediatelly
+            flashingTextElement.classList.add('match-result-flashing');
         }
     };
 

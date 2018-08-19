@@ -1,7 +1,8 @@
 {
 	"scripts": {
-		"test": "nyc ava src/tests/**/*.js --verbose",
+		"test": "ava src/tests/**/*.js --verbose",
 		"start": "webpack-dev-server --open",
+		"codecoverage": "nyc ava src/tests/**/*.js",
 		"buildprod": "webpack -p"
 	},
 	"devDependencies": {
