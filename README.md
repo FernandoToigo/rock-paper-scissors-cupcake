@@ -1,18 +1,37 @@
 # rock-paper-scissors-cupcake
-Rock-paper-scissors game that is part of the hiring process for Cupcake Entertainment.
+Rock, paper and scissors game that is part of the hiring process for Cupcake Entertainment.
 
-## Installing
+In order to play, first choose the players (human, computer or computer+). Then, choose the move you want to play and press Play Round.
 
-Install all the necessary packages by running:
+## Running
+
+First, install all the necessary packages by running:
 
 ```console
 npm install
 ```
 
-## Testing
+Then, run the following command to start the program in development mode:
 
-Run all the tests and view the code coverage by running:
+```console
+npm start
+```
+
+Your browser should open up with the game running.
+All changes on files should refresh your browser automatically with the changes.
+
+## Tests
+
+Run all the tests by running:
 
 ```console
 npm test
+```
+
+## Code coverage
+
+To view the report of the code that is covereded in tests, run:
+
+```console
+npm run codecoverage
 ```
