@@ -14,6 +14,8 @@ window.onload = function () {
     const computerOptionsOne = document.getElementById('computerOptionsOne');
     const computerOptionsTwo = document.getElementById('computerOptionsTwo');
     const playRoundButton = document.getElementById('playRoundButton');
+    const playerOneScore = document.getElementById('playerOneScore');
+    const playerTwoScore = document.getElementById('playerTwoScore');
 
     const selectedIndexes = {};
     let playMatch = undefined;
@@ -69,6 +71,10 @@ window.onload = function () {
         setFirstButtonIcon(computerOptionsOne, 'question', null);
         setFirstButtonIcon(computerOptionsTwo, 'question', null);
         matchResultElement.innerHTML = "";
+        scoreboard.playerOne = 0;
+        scoreboard.playerTwo = 0;
+        playerOneScore.innerHTML = '0';
+        playerTwoScore.innerHTML = '0';
 
         history = [];
         const gameConfiguration = {
@@ -106,10 +112,12 @@ window.onload = function () {
             if (matchResult.result == matchResult.playerOneOption) {
                 scoreboard.playerOne++;
                 resultMessage = "Player 1 wins!";
+                playerOneScore.innerHTML = scoreboard.playerOne;
             }
             else if (matchResult.result == matchResult.playerTwoOption) {
                 scoreboard.playerTwo++;
                 resultMessage = "Player 2 wins!";
+                playerTwoScore.innerHTML = scoreboard.playerTwo;
             }
 
             matchResultElement.innerHTML = resultMessage;

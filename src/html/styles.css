@@ -14,12 +14,12 @@
 }
 
 .page-previous {
-    transform: translateY(-100vh);
+    transform: translateY(-125vh);
     transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .page-next {
-    transform: translateY(100vh);
+    transform: translateY(125vh);
     transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
